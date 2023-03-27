@@ -32,6 +32,9 @@ public class MyClient {
 			// loop.
 			String largestServer = "";
 
+			int numberOfLargeServers = 0;
+			int lastServerUsed = 0;
+
 			// This is where the job scheduling happens. Standard commands like REDY and
 			// GETS (which only runs once). Runs till there are no jobs left
 			while (!(lastmessage.equals("NONE"))) {
@@ -44,7 +47,6 @@ public class MyClient {
 				// If the previous command yields NONE, the following lines of code will break
 				// the loop
 				if (jobs.equals("NONE")) {
-					System.out.println("it came here");
 					break;
 				}
 
@@ -54,7 +56,6 @@ public class MyClient {
 
 				// The following if statement checks if the code's already been run. In case it
 				// has not, It asks for server info and finds out the largest server
-				int numberOfLargeServers = 0;
 				if (times < 1) {
 
 					dout.write(("GETS All\n").getBytes());
@@ -105,11 +106,16 @@ public class MyClient {
 				// Checks if the jobs data has the word JOBN in it. If it does, a job is
 				// scheduled to the largest server.
 				if (jobsIndivData[0].equals("JOBN")) {
-					String schedCommand = "SCHD " + jobId + " " + largestServer + " 0";
+					String schedCommand = "SCHD " + jobId + " " + largestServer + " " + lastServerUsed;
 					System.out.println(schedCommand);
 					dout.write((schedCommand + "\n").getBytes());
 					System.out.println((String) dis.readLine() + "\n");
 					dout.flush();
+					lastServerUsed += 1;
+					if (lastServerUsed >= numberOfLargeServers) {
+						System.out.println("Server count has been reset");
+						lastServerUsed = 0;
+					}
 				}
 
 				times += 1;
