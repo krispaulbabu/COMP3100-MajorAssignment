@@ -6,24 +6,34 @@ public class MyClient {
 	public static void main(String[] args) {
 		try {
 
+			// creating socket connection and initializing input and output streams
 			Socket s = new Socket("localhost", 50000);
 			DataOutputStream dout = new DataOutputStream(s.getOutputStream());
 			BufferedReader dis = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
+			// first handshake. Sending hello messages and other standard responses like
+			// Auth etc.,
 			dout.write(("HELO\n").getBytes());
 			System.out.println((String) dis.readLine());
 			dout.flush();
 
 			String username = System.getProperty("user.name");
-
 			dout.write(("AUTH " + username + "\n").getBytes());
 			String lastmessage = (String) dis.readLine();
 			System.out.println(lastmessage);
 			dout.flush();
 
+			// times represents the number of times the while loop has run. This variable is
+			// used to stop running the GETS command after one run of the while loop.
 			int times = 0;
+
+			// Initializing this variable inside the while loop messes it up by setting it
+			// to an empty string every time the loop runs. So I've kept it outside the
+			// loop.
 			String largestServer = "";
 
+			// This is where the job scheduling happens. Standard commands like REDY and
+			// GETS (which only runs once). Runs till there are no jobs left
 			while (!(lastmessage.equals("NONE"))) {
 
 				dout.write(("REDY\n").getBytes());
@@ -31,14 +41,19 @@ public class MyClient {
 				System.out.println(jobs);
 				dout.flush();
 
+				// If the previous command yields NONE, the following lines of code will break
+				// the loop
 				if (jobs.equals("NONE")) {
 					System.out.println("it came here");
 					break;
 				}
 
+				// This splits the data recieved from the REDY command to get the jobId
 				String[] jobsIndivData = jobs.split(" ");
 				int jobId = Integer.parseInt(jobsIndivData[2]);
 
+				// The following if statement checks if the code's already been run. In case it
+				// has not, It asks for server info and finds out the largest server
 				int numberOfLargeServers = 0;
 				if (times < 1) {
 
@@ -49,6 +64,7 @@ public class MyClient {
 					dout.write(("OK\n").getBytes());
 					dout.flush();
 
+					// Splits the data string to find the nRecs
 					String[] indivData = data.split(" ");
 					int nRecs = Integer.parseInt(indivData[1]);
 
@@ -56,7 +72,7 @@ public class MyClient {
 					String[][] serversList = new String[nRecs][];
 					int largestServerCores = 0;
 
-					System.out.println("We been here");
+					// Prints out server information and finds out the largest server
 					for (int i = 0; i < nRecs; i++) {
 						servers = (String) dis.readLine();
 						System.out.println(servers);
@@ -73,16 +89,21 @@ public class MyClient {
 
 					System.out.println(largestServer);
 
+					// The following for loop finds out the number of servers present in the largest
+					// server type.
 					for (int i = 0; i < nRecs; i++) {
 						if (serversList[i][0].equals(largestServer)) {
 							numberOfLargeServers += 1;
 						}
 					}
+
 					dout.write(("OK\n").getBytes());
 					dis.readLine();
 					dout.flush();
 				}
 
+				// Checks if the jobs data has the word JOBN in it. If it does, a job is
+				// scheduled to the largest server.
 				if (jobsIndivData[0].equals("JOBN")) {
 					String schedCommand = "SCHD " + jobId + " " + largestServer + " 0";
 					System.out.println(schedCommand);
@@ -91,21 +112,12 @@ public class MyClient {
 					dout.flush();
 				}
 
-				else {
-					System.out.println("\n\n");
-				}
-
 				times += 1;
-
 			}
 
 			dout.write(("QUIT\n").getBytes());
 			System.out.println((String) dis.readLine());
 			dout.flush();
-
-			// dout.write(("SCHD 0 joon 0\n").getBytes());
-			// System.out.println((String) dis.readLine());
-			// dout.flush();
 
 			dout.close();
 			dis.close();
