@@ -84,6 +84,7 @@ public class MyClient {
 						if (Integer.parseInt(serverIndiv[4]) > largestServerCores) {
 							largestServer = serverIndiv[0];
 							largestServerCores = Integer.parseInt(serverIndiv[4]);
+
 						}
 
 					}
