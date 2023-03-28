@@ -47,6 +47,7 @@
             linkcolor = black, 
             citecolor = black]{hyperref} % For hyperlinks in the PDF
 \usepackage{graphicx, multicol} % Enhanced support for graphics
+\graphicspath{ {./images/} }
 \usepackage{xcolor} % Driver-independent color extensions
 \usepackage{marvosym, wasysym} % More symbols
 \usepackage{rotating} % Rotation tools
@@ -79,6 +80,10 @@
 \usepackage{comment}
 \newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
 
+\usepackage{hyperref}
+
+% \usepackage{makeidx} 
+% \makeindex
 %----------------------------------------------------------------------------------------
 
 \begin{document}
@@ -93,10 +98,10 @@
 \begin{minipage}{1\textwidth} % Center of title section
 \centering 
 \large % Title text size
-Project report: Stage x\\ % Assignment title and number
+Project report: Stage 1\\ % Assignment title and number
 COMP3100 Distributed Systems, S2, 2022\\
 \normalsize % Subtitle text size
-SID: xxxxxxxx, Name: your\_first\_ name\_and\_last\_name
+SID: 46225854, Name: Kris Paul Babu
 %%%%\\ % Assignment subtitle
 \end{minipage}
 \medskip\hrule % Lower rule
@@ -105,31 +110,34 @@ SID: xxxxxxxx, Name: your\_first\_ name\_and\_last\_name
 %----------------------------------------------------------------------------------------
 %	ARTICLE CONTENTS
 %----------------------------------------------------------------------------------------
-\section{Introduction}
-Brief introduction of your stage...~\cite{mesos2011}.
+\section*{Section 1: Introduction}
+\label{sec:section1}
+In this report I will go into detail about my solution to stage 1 of the Major Assessment. In stage 1,  
+a connection is created between a simulated DS server and a client server. Which involves sending handshakes, 
+server scouting and job scheduling. The purpose of this is to demonstrate how a real life client-server 
+job scheduling would take place. In section 2, I provide a high-level system overview to help understand how 
+the system would work. Section 3 goes into detail about the design of the overall framework, the constraints 
+functionalities etc.,. Section 4 explains the implementation of the solution, libraries involved, technologies 
+used etc., 
 
-In this report, I aim to ...
+\subsection*{Index}
+\begin{itemize}
+    \item \hyperref[sec:section1]{Section 1: Introduction}
+    \item \hyperref[sec:section2]{Section 2: High-Level Description}
+    \item \hyperref[sec:section3]{Section 3: Design}
+    \item \hyperref[sec:section4]{Section 4: Implementation}
+\end{itemize}
 
-The rest of this report is organised as follows. Section~\ref{sec:section2} gives an overview of ...
+\section*{Section 2: High-Level Description}\label{sec:section2}
+\includegraphics*[scale=0.708]{Flowchart.png}
 
-\section{Section 2}
-\label{sec:section2}
-
-\section{Section 3}
-\label{sec:section3}
-In this section, I first describe x and then y.
-
-\subsection{Section 3.1}
-This is a sub-section.
-
-\subsection{Section 3.2}
-Yet another sub-section goes here.
+\section*{Section 3}\label{sec:section3}
 
 \begin{table}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|c|}
     \hline
-        Heading 1 & Heading 2 & Heading 3 & Heading 4 & ... \\
+        Heading 1 & Heading 2 & Heading 3 & Heading 4 & \ldots \\
     \hline
     A & \$100.0 &&& \\\hline
     B & $\sim$ \$93 &&& \\\hline
@@ -141,12 +149,10 @@ Yet another sub-section goes here.
     \caption{Average Performance.}
 \end{table}
 
-\subsection{Section 3.3}
+\subsection{Section}
 Criticism/reflection and improvement suggestions
 
-
-\section{Section 4}
-
+\section*{Section 4}\label{sec:section4}
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
