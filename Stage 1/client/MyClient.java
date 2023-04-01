@@ -14,13 +14,14 @@ public class MyClient {
 			// first handshake. Sending hello messages and other standard responses like
 			// Auth etc.,
 			dout.write(("HELO\n").getBytes());
-			System.out.println((String) dis.readLine());
+			// System.out.println((String) dis.readLine());
+			dis.readLine();
 			dout.flush();
 
 			String username = System.getProperty("user.name");
 			dout.write(("AUTH " + username + "\n").getBytes());
 			String lastmessage = (String) dis.readLine();
-			System.out.println(lastmessage);
+			// System.out.println(lastmessage);
 			dout.flush();
 
 			// times represents the number of times the while loop has run. This variable is
@@ -41,7 +42,7 @@ public class MyClient {
 
 				dout.write(("REDY\n").getBytes());
 				String jobs = (String) dis.readLine();
-				System.out.println(jobs);
+				// System.out.println(jobs);
 				dout.flush();
 
 				// If the previous command yields NONE, the following lines of code will break
@@ -76,7 +77,7 @@ public class MyClient {
 					// Prints out server information and finds out the largest server
 					for (int i = 0; i < nRecs; i++) {
 						servers = (String) dis.readLine();
-						System.out.println(servers);
+						// System.out.println(servers);
 
 						String[] serverIndiv = servers.split(" ");
 						serversList[i] = serverIndiv;
@@ -89,7 +90,7 @@ public class MyClient {
 
 					}
 
-					System.out.println(largestServer);
+					// System.out.println(largestServer);
 
 					// The following for loop finds out the number of servers present in the largest
 					// server type.
@@ -108,13 +109,14 @@ public class MyClient {
 				// scheduled to the largest server.
 				if (jobsIndivData[0].equals("JOBN")) {
 					String schedCommand = "SCHD " + jobId + " " + largestServer + " " + lastServerUsed;
-					System.out.println(schedCommand);
+					// System.out.println(schedCommand);
 					dout.write((schedCommand + "\n").getBytes());
-					System.out.println((String) dis.readLine() + "\n");
+					// System.out.println((String) dis.readLine() + "\n");
+					dis.readLine();
 					dout.flush();
 					lastServerUsed += 1;
 					if (lastServerUsed >= numberOfLargeServers) {
-						System.out.println("Server count has been reset");
+						// System.out.println("Server count has been reset");
 						lastServerUsed = 0;
 					}
 				}
@@ -123,7 +125,8 @@ public class MyClient {
 			}
 
 			dout.write(("QUIT\n").getBytes());
-			System.out.println((String) dis.readLine());
+			// System.out.println((String) dis.readLine());
+			dis.readLine();
 			dout.flush();
 
 			dout.close();
