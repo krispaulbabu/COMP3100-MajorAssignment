@@ -1,5 +1,6 @@
-This is a repository for stage 1 of my COMP3100 major Assessment. This 
-repository contains two files 
+This is a repository for stage 1 of my COMP3100 major Assessment. The repository contains the following files:
 
-* Stage 1 - contains the client server 
-* Latex - contains the latex documentation for stage 1
+* MyClient.java - the java file that contains the client code 
+* MyClient.class - the java client executable 
+* ds-client - the client side simulator 
+* ds-server - the server side simulator 
